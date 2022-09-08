@@ -21,7 +21,7 @@ const Gameboard = (props) => {
         let currScore = props.currScore;
         if (props.currScore > props.currHS) props.setHS(currScore);
         props.incScore(0);
-
+        props.select([]);
         props.resetCards();
     }
     
