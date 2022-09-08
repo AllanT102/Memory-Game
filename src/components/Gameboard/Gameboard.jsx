@@ -1,16 +1,22 @@
 import React from "react";
 import Card from "./Card"
+import uniqid from "uniqid";
+import "../styles/gameboard.css"
 
 const Gameboard = (props) => {
 
+    const cardOnClick = () => {
+        
+    }
+
     const renderCards = () => {
         let cards = []
-        props.pokemon.forEach((card) => cards.push(<Card info={card}/>))
+        props.pokemon.forEach((card) => cards.push(<Card info={card} key={uniqid()}/>))
         return cards;
     }
 
     return (
-        <div style={{border: "solid blue 2px"}}>
+        <div className="board">
             {renderCards()}
         </div>
     )

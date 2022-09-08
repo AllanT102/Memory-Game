@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Header from "./Header"
-import Gameboard from "./Gameboard/Gameboard"
+import Header from "./Header";
+import Gameboard from "./Gameboard/Gameboard";
+import "./styles/main.css";
 
 const Main = (props) => {
 
@@ -14,10 +15,18 @@ const Main = (props) => {
         const loadCards = async () => {
             setPokemon(shuffleArray(await fetchPokemon()));
         }
+        loadCards();
     }, [])
 
     const shuffleArray = (arr) => {
+        let currIndex = arr.length, randomIndex;
 
+        while(currIndex !== 0) {
+            randomIndex = Math.floor(Math.random() * currIndex);
+            currIndex--;
+            [arr[currIndex], arr[randomIndex]] = [arr[randomIndex], arr[currIndex]];
+        }
+        return arr;
     }
 
     const fetchPokemon = async () => {
@@ -25,16 +34,19 @@ const Main = (props) => {
         for (let i = 0; i < CARD_AMOUNT; i++) {
             const poke = Math.floor(Math.random() * 906);
             const request = await fetch(`https://pokeapi.co/api/v2/pokemon/${poke}`);
-            const imgsrc = request.sprites.front_default;
-            if (imgsrc !== null) pokeArr.push(imgsrc);
+            const json = await request.json();
+            const imgsrc = json.sprites.front_default;
+            const pokeName = json.name;
+            if (imgsrc !== null) pokeArr.push({src: imgsrc, name: pokeName});
             else i -= 1;
         }
+        return pokeArr;
     }
 
     return (
-        <div>
+        <div className="main">
             <Header />
-            <Gameboard pokemon={["a", "b", "c"]}/>
+            <Gameboard pokemon={pokemon}/>
         </div>
     )
 }

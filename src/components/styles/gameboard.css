@@ -1,0 +1,15 @@
+.board {
+    width: 60%;
+    height: auto;
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(4, 1fr);
+    gap: 5%;
+    border: solid red 2px;
+}
+
+
+@media only screen and (max-width: 1100px) {
+    .board {
+        grid-template: repeat(6, 1fr) / repeat(2, 1fr);
+    }
+}
